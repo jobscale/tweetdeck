@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=tweetdeck
+Exec=tweetdeck
+Icon=app/favicon.ico
+Type=Application
+Categories=GTK;GNOME;Utility;

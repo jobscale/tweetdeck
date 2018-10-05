@@ -1,22 +1,38 @@
 {
-  "name": "electron-quick-start",
+  "name": "tweetdeck",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
-  "main": "main.js",
+  "description": "Electron application",
+  "main": "app/index.js",
   "scripts": {
-    "start": "electron ."
+    "lint": "eslint .",
+    "dev": "electron .",
+    "start": "npm run lint && npm run dev",
+    "inspect": "electron . --inspect-brk",
+    "release": "[ ! build ] && build"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
-  "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
-  ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "repository": "https://github.com/jobscale/tweetdeck",
+  "author": "jobscale <jobscale@jsx.jp>",
+  "dependencies": {},
   "devDependencies": {
-    "electron": "^3.0.0"
-  }
+    "babel-eslint": "^10.0.1",
+    "electron": "^3.0.2",
+    "electron-builder": "^20.28.4",
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-html": "^4.0.6",
+    "eslint-plugin-import": "^2.14.0"
+  },
+  "build": {
+    "appId": "jp.jsx.tweetdeck",
+    "icon": "app/icon.png",
+    "linux": {
+      "icon": "app/icon.png",
+      "target": [
+        "AppImage",
+        "deb",
+        "tar.xz"
+      ]
+    }
+  },
+  "license": "MIT"
 }
