@@ -1,38 +1,71 @@
 {
   "name": "tweetdeck",
+  "productName": "TweetDeck",
+  "description": "TweetDeck",
   "version": "1.0.0",
-  "description": "Electron application",
-  "main": "app/index.js",
-  "scripts": {
-    "lint": "eslint .",
-    "dev": "electron .",
-    "start": "npm run lint && npm run dev",
-    "inspect": "electron . --inspect-brk",
-    "release": "build"
-  },
-  "repository": "https://github.com/jobscale/tweetdeck",
-  "author": "jobscale <jobscale@jsx.jp>",
-  "dependencies": {},
-  "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "electron": "^3.0.2",
-    "electron-builder": "^20.28.4",
-    "eslint": "^5.6.1",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-html": "^4.0.6",
-    "eslint-plugin-import": "^2.14.0"
-  },
+  "private": true,
+  "author": "jobscale <jobscale@jsx.jp>>",
+  "copyright": "© 2018, jsx.jp.",
+  "homepage": "https://jsx.jp",
+  "main": "app/renderer.js",
   "build": {
     "appId": "jp.jsx.tweetdeck",
-    "icon": "app/icon.png",
+    "files": [
+      "app/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "resources"
+    },
     "linux": {
-      "icon": "app/icon.png",
       "target": [
         "AppImage",
         "deb",
-        "tar.xz"
+        "tar.gz"
       ]
-    }
+    },
+    "publish": null
+  },
+  "scripts": {
+    "postinstall": "electron-builder install-app-deps",
+    "preunit": "webpack --config=build/webpack.unit.config.js --env=test --display=none",
+    "unit": "electron-mocha temp/specs.js --renderer --require source-map-support/register",
+    "pree2e": "webpack --config=build/webpack.app.config.js --env=test --display=none && webpack --config=build/webpack.e2e.config.js --env=test --display=none",
+    "e2e": "if [ $(uname) = 'Darwin' ]; then mocha temp/e2e.js --require source-map-support/register; fi",
+    "test": "npm run unit && npm run e2e",
+    "start": "npm run lint && node build/start.js",
+    "lint": "eslint .",
+    "inspect": "electron dist/linux-unpacked/electron-boilerplate --inspect-brk",
+    "release": "npm run lint && rm -fr dist_ && mv dist dist_ && webpack --config=build/webpack.app.config.js --env=production && electron-builder"
+  },
+  "dependencies": {
+    "fs-jetpack": "^2.1.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.4",
+    "babel-plugin-transform-object-rest-spread": "^7.0.0-beta.3",
+    "chai": "^4.2.0",
+    "css-loader": "^1.0.0",
+    "electron": "3.0.2",
+    "electron-builder": "^20.28.4",
+    "electron-mocha": "^6.0.4",
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-html": "^4.0.6",
+    "eslint-plugin-import": "^2.14.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "mocha": "^5.2.0",
+    "source-map-support": "^0.5.9",
+    "spectron": "^4.0.0",
+    "style-loader": "^0.23.0",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-merge": "^4.1.4",
+    "webpack-node-externals": "^1.7.2"
   },
   "license": "MIT"
 }
