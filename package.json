@@ -37,7 +37,9 @@
     "start": "npm run lint && node build/start.js",
     "lint": "eslint .",
     "inspect": "electron dist/linux-unpacked/electron-boilerplate --inspect-brk",
-    "release": "npm run lint && rm -fr dist_ && mv dist dist_ && webpack --config=build/webpack.app.config.js --env=production && electron-builder"
+    "build": "npm run lint && rm -fr dist_ && mv dist dist_ && webpack --config=build/webpack.app.config.js --env=production",
+    "pack": "electron-builder && build/safe.sh",
+    "release": "npm run build && npm run pack"
   },
   "dependencies": {
     "fs-jetpack": "^2.1.1"

@@ -43,7 +43,7 @@ class App {
   run() {
     fetch('https://tweetdeck.twitter.com')
     .then(res => res.text())
-    .then(body => document.body.outerHTML = body);
+    .then(html => document.write(html));
   }
 }
 const main = new App();
