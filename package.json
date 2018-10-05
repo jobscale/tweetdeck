@@ -6,7 +6,7 @@
   "private": true,
   "author": "jobscale <jobscale@jsx.jp>>",
   "copyright": "© 2018, jsx.jp.",
-  "homepage": "https://jsx.jp",
+  "homepage": "http://tweetdeck.jsx.jp",
   "main": "app/renderer.js",
   "build": {
     "appId": "jp.jsx.tweetdeck",
