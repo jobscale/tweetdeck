@@ -8,7 +8,7 @@
     "dev": "electron .",
     "start": "npm run lint && npm run dev",
     "inspect": "electron . --inspect-brk",
-    "release": "[ ! build ] && build"
+    "release": "build"
   },
   "repository": "https://github.com/jobscale/tweetdeck",
   "author": "jobscale <jobscale@jsx.jp>",
