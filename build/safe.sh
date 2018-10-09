@@ -1,5 +1,6 @@
 #!/bin/bash -eu
 
+[[ "$(uname)" != "Linux" ]] && exit;
 cd dist
 name=tweetdeck
 target=$(ls tweetdeck*tar.gz | sed -re 's/.tar.gz//')
