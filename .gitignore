@@ -5,10 +5,11 @@ Thumbs.db
 
 /dist*
 /temp
+.idea/
+package-lock.json
+release/
 
 # ignore everything in 'app' folder what had been generated from 'src' folder
 /app/index.js
 /app/renderer.js
 /app/**/*.map
-.idea/
-package-lock.json

@@ -88,6 +88,8 @@
             <div id="date">Download</div>
         </div>
         <div class="links">
+            <div class="subtitle">MacOS</div>
+            <a href="TweetDeck-1.0.0.dmg" download="TweetDeck-1.0.0.dmg">TweetDeck-1.0.0.dmg</a><br>
             <div class="subtitle">Ubuntu 18.04, Ubuntu Other, Lubuntu, Xubuntu, Debian</div>
             <a href="tweetdeck_1.0.0_amd64.deb" download="tweetdeck_1.0.0_amd64.deb">tweetdeck_1.0.0_amd64.deb</a><br>
             <div class="subtitle">Other Linux</div>
