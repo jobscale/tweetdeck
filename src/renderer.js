@@ -6,6 +6,7 @@
 import path from 'path';
 import url from 'url';
 import { app, Menu } from 'electron';
+import { editMenuTemplate } from './menu/edit_menu_template';
 import { devMenuTemplate } from './menu/dev_menu_template';
 import createWindow from './helpers/window';
 
@@ -14,7 +15,7 @@ import createWindow from './helpers/window';
 import { env } from './config';
 
 const setApplicationMenu = () => {
-  const menus = [];
+  const menus = [editMenuTemplate];
   if (env.name !== 'production') {
     menus.push(devMenuTemplate);
   }
@@ -32,12 +33,12 @@ if (env.name !== 'production') {
 app.on('ready', () => {
   setApplicationMenu();
 
-  const mainWindow = createWindow('main', {
+  const win = createWindow('main', {
     width: 1000,
     height: 1400,
   });
 
-  mainWindow.loadURL(
+  win.loadURL(
     url.format({
       pathname: path.join(__dirname, 'index.html'),
       protocol: 'file:',
@@ -46,7 +47,7 @@ app.on('ready', () => {
   );
 
   if (env.name === 'development') {
-    mainWindow.openDevTools();
+    win.openDevTools();
   }
 });
 
