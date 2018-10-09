@@ -25,6 +25,16 @@
         "tar.gz"
       ]
     },
+    "mac": {
+      "target": [
+        "dmg"
+      ]
+    },
+    "win": {
+      "target": [
+        "msi"
+      ]
+    },
     "publish": null
   },
   "scripts": {
@@ -35,10 +45,12 @@
     "e2e": "if [ $(uname) = 'Darwin' ]; then mocha temp/e2e.js --require source-map-support/register; fi",
     "test": "npm run lint && npm run unit && npm run e2e",
     "start": "npm run lint && node build/start.js",
+    "stop": "npm run build && electron-builder --linux dir && npm run inspect",
     "lint": "eslint .",
-    "inspect": "electron dist/linux-unpacked/electron-boilerplate --inspect-brk",
+    "inspect": "dist/linux-unpacked/tweetdeck --inspect-brk",
     "build": "npm run lint && rm -fr dist_ && if [ -d dist ]; then mv dist dist_; fi && webpack --config=build/webpack.app.config.js --env=production",
     "pack": "electron-builder && build/safe.sh",
+    "deb": "npm run build && electron-builder --linux deb",
     "release": "npm run build && npm run pack"
   },
   "dependencies": {
