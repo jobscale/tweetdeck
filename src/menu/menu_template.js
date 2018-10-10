@@ -19,6 +19,14 @@ export const menuTemplates = [{
     label: 'Light',
     accelerator: 'CmdOrCtrl+L',
     click() {},
+  }, {
+    label: 'Opacity',
+    accelerator: 'CmdOrCtrl+O',
+    click() {},
+  }, {
+    label: 'UnOpacity',
+    accelerator: 'CmdOrCtrl+U',
+    click() {},
   }],
 }, {
   label: 'View',

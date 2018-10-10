@@ -6,7 +6,7 @@
 import path from 'path';
 import url from 'url';
 import { app, Menu } from 'electron';
-import { menuTemplates } from './menu/edit_menu_template';
+import { menuTemplates } from './menu/menu_template';
 import { devMenuTemplate } from './menu/dev_menu_template';
 import createWindow from './helpers/window';
 
@@ -17,15 +17,6 @@ import { env } from './config';
 class Daemon {
   constructor() {
     setTimeout(() => this.first(), 5000);
-  }
-
-  first() {
-    const cmd = `
-    document.head.appendChild(document.createElement("style"))
-    .innerText = "html{background-color:black;color:white;}body{opacity:0.8;background-color:aliceblue;color:dimgray;}";
-    `;
-    this.executeJavaScript(cmd, this.win.webContents)
-    .then(result => result);
   }
 
   promise() {
@@ -43,20 +34,52 @@ class Daemon {
     return promise.instance;
   }
 
+  first() {
+    const cmd = `(() => {
+      const element = document.querySelector("style#tdl-opacity") || document.head.appendChild(document.createElement("style"));
+      element.id = "tdl-opacity";
+      element.innerText = "html{background-color:black;color:white;}body{opacity:0.8;background-color:aliceblue;color:dimgray;}";
+    })()`;
+    this.executeJavaScript(cmd, this.win.webContents)
+    .then(result => result);
+  }
+
   light(webContents) {
-    const cmd = `
-    document.head.appendChild(document.createElement("style"))
-    .innerText = "section *, .app-columns-container, .column-header{background-color:white;color:black;}";
-    `;
+    const cmd = `(() => {
+      const element = document.querySelector("style#tdl-color") || document.head.appendChild(document.createElement("style"));
+      element.id = "tdl-color";
+      element.innerText = "section *, .app-columns-container, .column-header{background-color:white;color:black;}";
+    })()`;
     this.executeJavaScript(cmd, webContents)
     .then(result => result);
   }
 
   dark(webContents) {
-    const cmd = `
-    document.head.appendChild(document.createElement("style"))
-    .innerText = "section *, .app-columns-container, .column-header{background-color:black;color:white;}";
-    `;
+    const cmd = `(() => {
+      const element = document.querySelector("style#tdl-color") || document.head.appendChild(document.createElement("style"));
+      element.id = "tdl-color";
+      element.innerText = "section *, .app-columns-container, .column-header{background-color:black;color:white;}";
+    })()`;
+    this.executeJavaScript(cmd, webContents)
+    .then(result => result);
+  }
+
+  opacity(webContents) {
+    const cmd = `(() => {
+      const element = document.querySelector("style#tdl-opacity") || document.head.appendChild(document.createElement("style"));
+      element.id = "tdl-opacity";
+      element.innerText = "body{opacity:0.8;}";
+    })()`;
+    this.executeJavaScript(cmd, webContents)
+    .then(result => result);
+  }
+
+  unOpacity(webContents) {
+    const cmd = `(() => {
+      const element = document.querySelector("style#tdl-opacity") || document.head.appendChild(document.createElement("style"));
+      element.id = "tdl-opacity";
+      element.innerText = "";
+    })()`;
     this.executeJavaScript(cmd, webContents)
     .then(result => result);
   }
@@ -66,6 +89,10 @@ class Daemon {
     .click = (item, focusWindow) => focusWindow && this.dark(focusWindow.webContents);
     menuTemplates[1].submenu[1]
     .click = (item, focusWindow) => focusWindow && this.light(focusWindow.webContents);
+    menuTemplates[1].submenu[2]
+    .click = (item, focusWindow) => focusWindow && this.opacity(focusWindow.webContents);
+    menuTemplates[1].submenu[3]
+    .click = (item, focusWindow) => focusWindow && this.unOpacity(focusWindow.webContents);
   }
 
   setApplicationMenu() {
