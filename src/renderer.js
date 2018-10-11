@@ -35,13 +35,25 @@ class Daemon {
   }
 
   first() {
+    this.isMac
+    .then(this.setOpacity);
+  }
+
+  get isMac() {
+    const cmd = `(() => {
+      return navigator.userAgent.toLowerCase().match('macintosh');
+    })()`;
+    return this.executeJavaScript(cmd, this.win.webContents);
+  }
+
+  setOpacity(isMac) {
+    if (isMac) return;
     const cmd = `(() => {
       const element = document.querySelector("style#tdl-opacity") || document.head.appendChild(document.createElement("style"));
       element.id = "tdl-opacity";
       element.innerText = "html{background-color:black;color:white;}body{opacity:0.8;background-color:aliceblue;color:dimgray;}";
     })()`;
-    this.executeJavaScript(cmd, this.win.webContents)
-    .then(result => result);
+    this.executeJavaScript(cmd, this.win.webContents);
   }
 
   light(webContents) {
@@ -50,8 +62,7 @@ class Daemon {
       element.id = "tdl-color";
       element.innerText = "section *, .app-columns-container, .column-header{background-color:white;color:black;}";
     })()`;
-    this.executeJavaScript(cmd, webContents)
-    .then(result => result);
+    this.executeJavaScript(cmd, webContents);
   }
 
   dark(webContents) {
@@ -60,8 +71,7 @@ class Daemon {
       element.id = "tdl-color";
       element.innerText = "section *, .app-columns-container, .column-header{background-color:black;color:white;}";
     })()`;
-    this.executeJavaScript(cmd, webContents)
-    .then(result => result);
+    this.executeJavaScript(cmd, webContents);
   }
 
   opacity(webContents) {
@@ -70,8 +80,7 @@ class Daemon {
       element.id = "tdl-opacity";
       element.innerText = "body{opacity:0.8;}";
     })()`;
-    this.executeJavaScript(cmd, webContents)
-    .then(result => result);
+    this.executeJavaScript(cmd, webContents);
   }
 
   unOpacity(webContents) {
@@ -80,8 +89,7 @@ class Daemon {
       element.id = "tdl-opacity";
       element.innerText = "";
     })()`;
-    this.executeJavaScript(cmd, webContents)
-    .then(result => result);
+    this.executeJavaScript(cmd, webContents);
   }
 
   generateMenu() {
