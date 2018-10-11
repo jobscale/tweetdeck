@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "private": true,
   "author": "jobscale <jobscale@jsx.jp>>",
-  "copyright": "© 2018, jsx.jp.",
+  "copyright": "©2018, jsx.jp",
   "homepage": "http://tweetdeck.jsx.jp",
   "main": "app/renderer.js",
   "build": {
@@ -54,6 +54,7 @@
     "release": "npm run build && npm run pack"
   },
   "dependencies": {
+    "electron-about-window": "^1.12.1",
     "fs-jetpack": "^2.1.1"
   },
   "devDependencies": {

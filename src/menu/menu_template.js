@@ -1,4 +1,27 @@
+import { app } from 'electron';
+import openAboutWindow from 'electron-about-window';
+import { env } from '../config';
+
 export const menuTemplates = [{
+  label: 'TweetDeck',
+  submenu: [
+    {
+      label: 'About TweetDeck',
+      click: () => openAboutWindow({
+        icon_path: '../../resources/icons/512x512.png',
+        copyright: '©2018 jsx.jp',
+        package_json_dir: '../..',
+        open_devtools: env.name !== 'production',
+      }),
+    }, {
+      type: 'separator',
+    }, {
+      label: 'Quit TweetDeck',
+      accelerator: 'CmdOrCtrl+Q',
+      click: app.quit,
+    },
+  ],
+}, {
   label: 'Edit',
   submenu: [
     { label: 'Undo', accelerator: 'CmdOrCtrl+Z', selector: 'undo:' },
@@ -14,36 +37,31 @@ export const menuTemplates = [{
   submenu: [{
     label: 'Dark',
     accelerator: 'CmdOrCtrl+D',
-    click() {},
   }, {
     label: 'Light',
     accelerator: 'CmdOrCtrl+L',
-    click() {},
+  }, {
+    label: 'Pink',
+    accelerator: 'CmdOrCtrl+N',
+  }, {
+    type: 'separator',
   }, {
     label: 'Opacity',
     accelerator: 'CmdOrCtrl+O',
-    click() {},
   }, {
     label: 'UnOpacity',
     accelerator: 'CmdOrCtrl+U',
-    click() {},
   }],
 }, {
   label: 'View',
   submenu: [{
     label: 'Reload',
     accelerator: 'CmdOrCtrl+R',
-    click(item, focusWindow) {
-      if (!focusWindow) return;
-      focusWindow.reload();
-    },
+    click: (item, focusWindow) => focusWindow && focusWindow.reload(),
   }, {
     label: 'Toggle Developer Tools',
     accelerator: (process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I'),
-    click(item, focusWindow) {
-      if (!focusWindow) return;
-      focusWindow.webContents.toggleDevTools();
-    },
+    click: (item, focusWindow) => focusWindow && focusWindow.webContents.toggleDevTools(),
   }, {
     type: 'separator',
   }, {

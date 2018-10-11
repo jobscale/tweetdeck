@@ -12,7 +12,7 @@ const watching = compiler.watch({}, (err, stats) => {
     electronStarted = true;
 
     childProcess
-    .spawn(electron, ['.'], { stdio: 'inherit' })
+    .spawn(electron, ['.', '--inspect'], { stdio: 'inherit' })
     .on('close', () => {
       watching.close();
     });

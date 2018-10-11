@@ -36,7 +36,7 @@ class Daemon {
 
   first() {
     this.isMac
-    .then(this.setOpacity);
+    .then(() => this.setOpacity);
   }
 
   get isMac() {
@@ -49,57 +49,69 @@ class Daemon {
   setOpacity(isMac) {
     if (isMac) return;
     const cmd = `(() => {
-      const element = document.querySelector("style#tdl-opacity") || document.head.appendChild(document.createElement("style"));
-      element.id = "tdl-opacity";
-      element.innerText = "html{background-color:black;color:white;}body{opacity:0.8;background-color:aliceblue;color:dimgray;}";
+      const element = document.querySelector('style#tdl-opacity') || document.head.appendChild(document.createElement('style'));
+      element.id = 'tdl-opacity';
+      element.innerText = 'html{background-color:black;color:white;}body{opacity:0.8;background-color:aliceblue;color:dimgray}';
     })()`;
     this.executeJavaScript(cmd, this.win.webContents);
   }
 
   light(webContents) {
     const cmd = `(() => {
-      const element = document.querySelector("style#tdl-color") || document.head.appendChild(document.createElement("style"));
-      element.id = "tdl-color";
-      element.innerText = "section *, .app-columns-container, .column-header{background-color:white;color:black;}";
+      const element = document.querySelector('style#tdl-color') || document.head.appendChild(document.createElement('style'));
+      element.id = 'tdl-color';
+      element.innerText = 'section *, .app-columns-container, .column-header{background-color:white;color:black}';
     })()`;
     this.executeJavaScript(cmd, webContents);
   }
 
   dark(webContents) {
     const cmd = `(() => {
-      const element = document.querySelector("style#tdl-color") || document.head.appendChild(document.createElement("style"));
-      element.id = "tdl-color";
-      element.innerText = "section *, .app-columns-container, .column-header{background-color:black;color:white;}";
+      const element = document.querySelector('style#tdl-color') || document.head.appendChild(document.createElement('style'));
+      element.id = 'tdl-color';
+      element.innerText = 'section *, .app-columns-container, .column-header{background-color:black;color:white}';
+    })()`;
+    this.executeJavaScript(cmd, webContents);
+  }
+
+  pink(webContents) {
+    const cmd = `(() => {
+      const element = document.querySelector('style#tdl-color') || document.head.appendChild(document.createElement('style'));
+      element.id = 'tdl-color';
+      element.innerText = 'section *, .app-columns-container, .column-header{background-color:lightpink;color:deeppink}body{background-color:black}';
     })()`;
     this.executeJavaScript(cmd, webContents);
   }
 
   opacity(webContents) {
     const cmd = `(() => {
-      const element = document.querySelector("style#tdl-opacity") || document.head.appendChild(document.createElement("style"));
-      element.id = "tdl-opacity";
-      element.innerText = "body{opacity:0.8;}";
+      const element = document.querySelector('style#tdl-opacity') || document.head.appendChild(document.createElement('style'));
+      element.id = 'tdl-opacity';
+      element.innerText = 'body:before{position:relative}.app-content{opacity:0.8}';
     })()`;
     this.executeJavaScript(cmd, webContents);
   }
 
   unOpacity(webContents) {
     const cmd = `(() => {
-      const element = document.querySelector("style#tdl-opacity") || document.head.appendChild(document.createElement("style"));
-      element.id = "tdl-opacity";
-      element.innerText = "";
+      const element = document.querySelector('style#tdl-opacity') || document.head.appendChild(document.createElement('style'));
+      element.id = 'tdl-opacity';
+      element.innerText = '';
     })()`;
     this.executeJavaScript(cmd, webContents);
   }
 
   generateMenu() {
-    menuTemplates[1].submenu[0]
+    const idC = 2;
+    menuTemplates[idC].submenu[0]
     .click = (item, focusWindow) => focusWindow && this.dark(focusWindow.webContents);
-    menuTemplates[1].submenu[1]
+    menuTemplates[idC].submenu[1]
     .click = (item, focusWindow) => focusWindow && this.light(focusWindow.webContents);
-    menuTemplates[1].submenu[2]
+    menuTemplates[idC].submenu[2]
+    .click = (item, focusWindow) => focusWindow && this.pink(focusWindow.webContents);
+    menuTemplates[idC].submenu[4]
     .click = (item, focusWindow) => focusWindow && this.opacity(focusWindow.webContents);
-    menuTemplates[1].submenu[3]
+    menuTemplates[idC].submenu[5]
     .click = (item, focusWindow) => focusWindow && this.unOpacity(focusWindow.webContents);
   }
 
