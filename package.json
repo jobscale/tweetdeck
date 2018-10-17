@@ -46,12 +46,12 @@
     "test": "npm run lint && npm run unit && npm run e2e",
     "start": "npm run lint && node build/start.js",
     "stop": "npm run build && electron-builder --linux dir && npm run inspect",
-    "lint": "eslint .",
     "inspect": "dist/linux-unpacked/tweetdeck --inspect-brk",
-    "build": "npm run lint && rm -fr dist_ && if [ -d dist ]; then mv dist dist_; fi && webpack --config=build/webpack.app.config.js --env=production",
+    "build": "npm run lint && rm -fr dist_ && rm -fr dist && webpack --config=build/webpack.app.config.js --env=production",
     "pack": "electron-builder && build/safe.sh",
     "deb": "npm run build && electron-builder --linux deb",
-    "release": "npm run build && npm run pack"
+    "release": "npm run build && npm run pack",
+    "lint": "eslint ."
   },
   "dependencies": {
     "electron-about-window": "^1.12.1",
